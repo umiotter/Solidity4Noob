@@ -100,18 +100,40 @@ contract Ballot {
 
     }
 
-    function currentWinningProposal() public view returns(uint _result){
+    function currentWinningProposal() public view returns(uint[] memory _result){
         uint winningVoteCount = 0;
+        // count amount of most voted proposals
         for(uint p = 0; p < proposals.length; p++){
-            if (proposals[p].voteCount > winningVoteCount) {
+            if(proposals[p].voteCount > winningVoteCount) {
                 winningVoteCount = proposals[p].voteCount;
-                _result = p;
+            }
+        }
+        
+        // fixing _result length by counting equivalent proposals
+        uint equivalentProposalCount;
+        for(uint p = 0; p < proposals.length; p++){
+            if(proposals[p].voteCount == winningVoteCount){
+                equivalentProposalCount ++;
+            }
+        }
+        _result = new uint[](equivalentProposalCount);
+
+        // store equivalent proposal
+        uint index = 0;
+        for(uint i = 0; i < proposals.length; i++){
+            if(proposals[i].voteCount == winningVoteCount){
+                _result[index] = i;
+                index++;
             }
         }
     }
 
-    function winnerName() public view returns(bytes32 _winnerName){
-        _winnerName = proposals[currentWinningProposal()].name;
+    function winnerName() public view returns(bytes32[] memory _winnerName){
+        uint[] memory winners = currentWinningProposal();
+        _winnerName = new bytes32[](winners.length);
+        for(uint i; i < _winnerName.length; i++){
+            _winnerName[i] = proposals[winners[i]].name;
+        }
     }
 
 
