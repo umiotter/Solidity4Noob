@@ -1,4 +1,4 @@
 #!/usr/bin
 
-truffle complie
-truffle migrate
+hardhat complie
+hardhat migrate
