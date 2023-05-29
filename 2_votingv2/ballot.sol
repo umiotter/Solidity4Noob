@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0
+// SPDX-License-Identifier: MIT
 pragma solidity >=0.7.0 <0.9.0;
 
 /// @title Ballot Contrast
@@ -88,6 +88,8 @@ contract Ballot {
         }
     }
 
+    /// @notice vote
+    /// @param proposal voted proposal number
     function vote(uint proposal) external {
         Voter storage sender = voters[msg.sender];
         require(sender.weight != 0, "You have not right to vote.");
@@ -100,7 +102,8 @@ contract Ballot {
 
     }
 
-    function currentWinningProposal() public view returns(uint[] memory _result){
+    /// @notice current winning proposal indexs
+    function currentWinningProposal() public view returns(uint[] memory result_){
         uint winningVoteCount = 0;
         // count amount of most voted proposals
         for(uint p = 0; p < proposals.length; p++){
@@ -116,23 +119,23 @@ contract Ballot {
                 equivalentProposalCount ++;
             }
         }
-        _result = new uint[](equivalentProposalCount);
+        result_ = new uint[](equivalentProposalCount);
 
         // store equivalent proposal
         uint index = 0;
         for(uint i = 0; i < proposals.length; i++){
             if(proposals[i].voteCount == winningVoteCount){
-                _result[index] = i;
+                result_[index] = i;
                 index++;
             }
         }
     }
-
-    function winnerName() public view returns(bytes32[] memory _winnerName){
+    /// @notice current winning proposal names
+    function winnerName() public view returns(bytes32[] memory winnerName_){
         uint[] memory winners = currentWinningProposal();
-        _winnerName = new bytes32[](winners.length);
-        for(uint i; i < _winnerName.length; i++){
-            _winnerName[i] = proposals[winners[i]].name;
+        winnerName_ = new bytes32[](winners.length);
+        for(uint i; i < winnerName_.length; i++){
+            winnerName_[i] = proposals[winners[i]].name;
         }
     }
 
