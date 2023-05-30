@@ -64,6 +64,7 @@ contract BlindAuction{
     /// @param _values bid price
     /// @param _fake bid is fake or not
     /// @param _secret nonce for blind bid
+    /// @dev if a bidder dont reveal during reveal time, his/her eth will store in this contract permanently
     function reveal(
         uint[] calldata _values,
         bool[] calldata _fake,
