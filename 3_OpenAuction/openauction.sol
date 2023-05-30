@@ -25,9 +25,9 @@ contract OpenAuction {
     error AuctionEndAlreadyCalled();
 
     /// @notice setting auctionEndTime and beneficiary address
-    constructor(uint biddingTime, address payable beneficiaryAddress){
-        beneficiary = beneficiaryAddress;
-        auctionEndTime = block.timestamp + biddingTime;
+    constructor(uint _biddingTime, address payable _beneficiaryAddress){
+        beneficiary = _beneficiaryAddress;
+        auctionEndTime = block.timestamp + _biddingTime;
     }
 
     /// @notice bid a price

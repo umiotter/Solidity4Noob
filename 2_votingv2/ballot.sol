@@ -24,13 +24,13 @@ contract Ballot {
     Proposal[] public proposals;
 
     /// @notice setting contract deployer as chairperson, init proposal list
-    /// @param proposalNames proposal name list
-    constructor(bytes32[] memory proposalNames){
+    /// @param _proposalNames proposal name list
+    constructor(bytes32[] memory _proposalNames){
         chairperson = msg.sender;
         voters[chairperson].weight = 1;
-        for(uint i = 0; i < proposalNames.length; i++){
+        for(uint i = 0; i < _proposalNames.length; i++){
             proposals.push(Proposal({
-                name: proposalNames[i], 
+                name: _proposalNames[i], 
                 voteCount: 0
                 })
             );
@@ -89,16 +89,16 @@ contract Ballot {
     }
 
     /// @notice vote
-    /// @param proposal voted proposal number
-    function vote(uint proposal) external {
+    /// @param _proposal voted proposal number
+    function vote(uint _proposal) external {
         Voter storage sender = voters[msg.sender];
         require(sender.weight != 0, "You have not right to vote.");
         require(!sender.voted, "You have voted or delegated.");
 
         sender.voted = true;
-        sender.vote = proposal;
+        sender.vote = _proposal;
 
-        proposals[proposal].voteCount += sender.weight;
+        proposals[_proposal].voteCount += sender.weight;
 
     }
 
