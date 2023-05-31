@@ -34,7 +34,7 @@ contract ReceiverPays{
         selfdestruct(payable(msg.sender));
     }
 
-    /// @notice contract selfdestruct 
+    /// @notice split signature to r s v
     function splitSignature(bytes memory sig) internal pure returns(uint8 v, bytes32 r, bytes32 s){
         require(sig.length == 65);
 
