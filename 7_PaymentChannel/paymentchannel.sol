@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.7.0 <0.9.0;
 
+/// @notice sender is buyer, recipient is seller
+/// ETH的发送者是买家接收者是卖家， 每次交易买家会把支票发送给卖家
+/// 支票的金额是所有交易次数的金额的叠加，
+
 contract PaymentChannel {
     // The account sending payments
     address payable public sender; 
@@ -45,7 +49,9 @@ contract PaymentChannel {
     
     /// @notice while reach the expiration, the sender can close the channel and refund
     function claimTimeout() external {
-
+        require(msg.sender == sender);
+        require(block.timestamp > expiration);
+        selfdestruct(sender);
     }
 
     /// @notice split signature to r s v
