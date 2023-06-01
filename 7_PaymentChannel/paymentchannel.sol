@@ -3,7 +3,8 @@ pragma solidity >=0.7.0 <0.9.0;
 
 /// @notice sender is buyer, recipient is seller
 /// ETH的发送者是买家接收者是卖家， 每次交易买家会把支票发送给卖家
-/// 支票的金额是所有交易次数的金额的叠加，
+/// 支票的金额是所有交易次数的金额的叠加，这样买家只需要使用最后一次的支票信息发送给合约
+/// 兑现支票的金额。
 
 contract PaymentChannel {
     // The account sending payments
