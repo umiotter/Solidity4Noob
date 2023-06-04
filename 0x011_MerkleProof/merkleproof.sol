@@ -6,8 +6,7 @@ library MerkleProof {
      * @param proof sorted merkle proof list (either descend or ascend is ok)
      * @param root root of merkle tree
      * @param leaf leaf node wait for validation
-     * @dev 当通过`proof`和`leaf`重建出的`root`与给定的`root`相等时，返回`true`，数据有效。
-     * 在重建时，叶子节点对和元素对都是排序过的。
+     * @return bool reconstruct root node hash sucess or not
      */
     function verify(
         bytes32[] memory proof,
@@ -20,8 +19,7 @@ library MerkleProof {
     /**
      * @param proof sorted merkle proof list
      * @param leaf hashed leaf node wait for validation
-     * @dev Returns 通过Merkle树用`leaf`和`proof`计算出`root`. 当重建出的`root`和给定的`root`相同时，`proof`才是有效的。
-     * 在重建时，叶子节点对和元素对都是排序过的。 
+     * @return bytes32 root node hash
      */
     function processProof(bytes32[] memory proof, bytes32 leaf) internal pure returns (bytes32) {
         bytes32 computedHash = leaf;
@@ -29,8 +27,6 @@ library MerkleProof {
             computedHash = _hashPair(computedHash, proof[i]);
         }
         return computedHash;
-
-        
     }
 
     // Sorted Pair Hash

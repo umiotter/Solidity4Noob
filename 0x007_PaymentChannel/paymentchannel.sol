@@ -14,7 +14,7 @@ contract PaymentChannel {
     // Timeout in case the recipient never closes
     uint256 public expiration;
 
-    constructor (address payable _recipientAddress, uint256 _duration) public payable{
+    constructor (address payable _recipientAddress, uint256 _duration) payable{
         sender = payable(msg.sender);
         recipient = _recipientAddress;
         expiration = block.timestamp + _duration;
@@ -28,12 +28,12 @@ contract PaymentChannel {
 
     /// @notice add prefix
     function prefixed(bytes32 _hash) internal pure returns(bytes32){
-        return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", hash));
+        return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", _hash));
     }
 
     /// @notice the recipient close the channe at any time by presenting a signed amout from the sender.
     /// @dev the recipient will be sent that amount, and the remainder will go back to the sender.
-    function close(uint256 _amount, bytes32 memory _signature) external {
+    function close(uint256 _amount, bytes memory _signature) external {
         require(msg.sender == recipient);
         require(isValidSignature(_amount, _signature));
 
