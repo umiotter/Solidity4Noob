@@ -10,7 +10,7 @@ import "./utils/Address.sol";
 import "./utils/Strings.sol";
 
 // 
-contract ERC721Simple is IERC721, IERC721Metadata {
+contract ERC721Simple is IERC721, IERC721Metadata, IERC721Receiver{
     //Address library contrains isContract() for judging if addres is a contract
     using Address for address;
     //String library contrains uint to string function
