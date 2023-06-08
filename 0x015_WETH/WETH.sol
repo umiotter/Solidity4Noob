@@ -17,7 +17,6 @@ contract WETH is ERC20 {
         deposit();
     }
 
-
     /// @notice deposit ETH and transfer to WETH
     function deposit() public payable{
         _mint(msg.sender, msg.value);
