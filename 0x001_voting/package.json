@@ -1,0 +1,18 @@
+{
+  "name": "voting",
+  "version": "1.0.0",
+  "description": "a voting demo by solidity",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "umiotter",
+  "license": "MIT",
+  "dependencies": {
+    "hardhat": "^2.15.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "chai": "^4.3.7"
+  }
+}

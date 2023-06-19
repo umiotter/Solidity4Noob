@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.5.0 <0.6.0;
+pragma solidity ^0.8.4;
 import "./lib/safemath.sol";
 
 /// @title Voting Contrast
 /// @author umiotter
-/// @notice a voting demo
+/// @notice a simple voting demo
 contract Voting {
 
     using SafeMath for uint256;
@@ -15,7 +15,7 @@ contract Voting {
     mapping(bytes32 => uint256) public votesReceived;
     
     /// @notice initial the candidateList
-    constructor( bytes32[] memory candidateNames ) public {
+    constructor( bytes32[] memory candidateNames ) {
         candidateList = candidateNames;
     }
 
