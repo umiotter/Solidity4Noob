@@ -21,8 +21,8 @@ describe("Voting contract", () => {
   }
 
   // Test case
-  describe("Candidate List be the same.", () => {
-    it("Should successfuly ", async () => {
+  describe("Candidate List", () => {
+    it("should be successfuly loaded.", async () => {
       const { voting, owner, addr1, addr2, candidateList } = await loadFixture(
         deployVotingFixture
       );
@@ -32,5 +32,34 @@ describe("Voting contract", () => {
         expect(await voting.candidateList(i)).to.equal(candidateList[i]);
       }
     });
+  });
+
+  describe("Voting", () => {
+    it("should successfuly voted.", async () => {
+      const { voting, owner, addr1, addr2, candidateList } = await loadFixture(
+        deployVotingFixture
+      );
+      for (let j = 0; j < 10; j++) {
+        for (let i = 0; i < candidateList.length; i++) {
+          const beforeVote = await voting.votesReceived(candidateList[i]);
+          await voting.connect(addr1).addVote(candidateList[i]);
+          const afterVote = await voting.votesReceived(candidateList[i]);
+          expect(beforeVote).to.equal(afterVote - BigInt(1));
+        }
+      }
+    });
+
+    it("should able to query current votes.", async () => {
+        const { voting, owner, addr1, addr2, candidateList } = await loadFixture(
+            deployVotingFixture
+          );
+          for (let j = 0; j < 10; j++) {
+            for (let i = 0; i < candidateList.length; i++) {
+              await voting.connect(addr1).addVote(candidateList[i]);
+              const afterVote = await voting.votesReceived(candidateList[i]);
+              expect(await voting.queryCurrentVotes(candidateList[i])).to.equal(afterVote);
+            }
+          }
+        });
   });
 });
