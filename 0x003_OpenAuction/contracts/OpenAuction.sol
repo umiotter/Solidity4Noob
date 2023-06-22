@@ -17,6 +17,7 @@ contract OpenAuction {
     bool ended;
 
     event HighestBidIncreased(address bidder, uint amount);
+    event WithdrawSuccess(address addr, uint amount);
     event AcutionEnded(address winner, uint amount);
 
     error AcutionAlreadyEnded();
@@ -26,6 +27,7 @@ contract OpenAuction {
 
     /// @notice setting auctionEndTime and beneficiary address
     constructor(uint _biddingTime, address payable _beneficiaryAddress){
+        require(_beneficiaryAddress != address(0), "Beneficiary should not be zero address.");
         beneficiary = _beneficiaryAddress;
         auctionEndTime = block.timestamp + _biddingTime;
     }
@@ -52,17 +54,21 @@ contract OpenAuction {
     }
 
     /// @notice bider should call withdraw to return their eth
-    function withdraw() external returns(bool){
+    function withdraw() external{
         uint amount = pendingReturns[msg.sender];
         if(amount > 0){
             // preventing replay attack
             pendingReturns[msg.sender] = 0;
             if(!payable(msg.sender).send(amount)){
                 pendingReturns[msg.sender] = amount;
-                return false;
+                revert();
             }
+            emit WithdrawSuccess(msg.sender, amount);
         }
-        return true;
+        else {
+            revert();
+        }
+        
     } 
 
     /// @notice end the bid
