@@ -63,7 +63,7 @@ contract SimpleERC4626 is ERC20, IERC4626 {
         _asset.transferFrom(msg.sender, address(this), assets);
         _mint(receiver, shares);
 
-        // 释放 Deposit 事件
+        // release Deposit event
         emit Deposit(msg.sender, receiver, assets, shares);
     }
 
@@ -121,8 +121,6 @@ contract SimpleERC4626 is ERC20, IERC4626 {
         uint256 supply = totalSupply();
         return supply == 0 ? assets : (assets * supply) / totalAssets();
     }
-    // 金库本身限量供应vWETH份额（totalSupply）：100
-    // 存入这个金库的真正的WETH数量（totalAssets）：0
 
     function convertToAssets(
         uint256 shares
@@ -156,8 +154,8 @@ contract SimpleERC4626 is ERC20, IERC4626 {
     }
 
     function maxDeposit(
-        address receiver
-    ) external view override returns (uint256 maxAssets) {
+        address
+    ) external pure override returns (uint256 maxAssets) {
         return type(uint256).max;
     }
 
