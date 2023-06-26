@@ -26,6 +26,8 @@ I am learning solidity, this repository store some solidity demos which I learne
 - TransparentUpgradeableProxy \[[Code](https://github.com/umiotter/Solidity_Demos/blob/main/0x022_TransparentUpgradeableProxy/)\] 
 - UUPS \[[Code](https://github.com/umiotter/Solidity_Demos/blob/main/0x023_UUPS/)\] 
 - MultisigWallet \[[Code](https://github.com/umiotter/Solidity_Demos/blob/main/0x024_MultisigWallet/)\] 
+- ERC4626 \[[Code](https://github.com/umiotter/Solidity_Demos/blob/main/0x025_ERC4626/)\]\[[UnitTest](https://github.com/umiotter/Solidity_Demos/blob/main/0x025_ERC4626/test)\]
+- EIP712 \[[Code](https://github.com/umiotter/Solidity_Demos/blob/main/0x026_EIP712/)\] 
 
 
 # Reference
