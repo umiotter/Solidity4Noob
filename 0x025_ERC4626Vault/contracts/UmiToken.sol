@@ -18,5 +18,4 @@ contract UmiToken is ERC20 {
         require(msg.sender == owner, "mint::Only owner can mint.");
         _mint(owner,tokenNum);
     }
-
 }

@@ -6,7 +6,7 @@ import {ERC20, IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/ERC20.s
 
 contract SimpleERC4626 is ERC20, IERC4626 {
     ERC20 private immutable _asset;
-    uint private immutable _decimals;
+    uint8 private immutable _decimals;
 
     constructor(ERC20 asset_, string memory name_, string memory symbol_) ERC20(name_, symbol_){
         _asset = asset_;
@@ -22,7 +22,7 @@ contract SimpleERC4626 is ERC20, IERC4626 {
         return address(_asset);
     }
 
-    function decimals() public view override(IERC20Metadata, ERC20) returns(uint decimals){
+    function decimals() public view override(IERC20Metadata, ERC20) returns(uint8 decimals){
         return _decimals;
     }
 
