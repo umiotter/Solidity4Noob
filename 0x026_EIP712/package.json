@@ -9,6 +9,10 @@
   "author": "umiotter",
   "license": "MIT",
   "dependencies": {
+    "@openzeppelin/contracts": "^4.9.2",
     "hardhat": "^2.16.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0"
   }
 }
