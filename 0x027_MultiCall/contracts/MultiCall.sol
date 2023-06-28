@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "hardhat/console.sol";
+
 contract MultiCall {
     // Call command structure
     struct Call {
@@ -26,6 +28,7 @@ contract MultiCall {
         for (uint i = 0; i < length; i++) {
             Result memory result = returnData[i];
             callInstance = calls[i];
+            
             (result.success, result.returnData) = callInstance.target.call(
                 callInstance.callData
             );

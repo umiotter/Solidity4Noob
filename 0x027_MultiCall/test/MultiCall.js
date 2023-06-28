@@ -1,7 +1,6 @@
 const zeroAddress = "0x0000000000000000000000000000000000000000";
 
 const { expect } = require("chai");
-const { ethers } = require("hardhat");
 const {
   loadFixture,
   helpers,
@@ -33,9 +32,10 @@ describe("MultiCall", function () {
         [
           umiTokenAddr,
           false,
-          "0x40c10f1900000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c80000000000000000000000000000000000000000000000000000000000000064",
+          "0x40c10f190000000000000000000000003c44cdddb6a900fa2b585dd299e03d12fa4293bc0000000000000000000000000000000000000000000000000000000000000064",
         ],
       ];
+      // Attention:: If the mint function is set to only owner, multiCall will fail.
       await multiCall.multicall(calldata);
       expect(await umiToken.balanceOf(addr1.address)).to.equal(50);
       expect(await umiToken.balanceOf(addr2.address)).to.equal(100);
