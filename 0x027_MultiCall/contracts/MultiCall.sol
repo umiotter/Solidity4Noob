@@ -26,8 +26,10 @@ contract MultiCall {
         for (uint i = 0; i < length; i++) {
             Result memory result = returnData[i];
             callInstance = calls[i];
-            (result.success, result.returnData) = callInstance.target.call(callInstance.callData);
-            if(!(callInstance.allowFailure||result.success)){
+            (result.success, result.returnData) = callInstance.target.call(
+                callInstance.callData
+            );
+            if (!(callInstance.allowFailure || result.success)) {
                 revert("Multicall: call failed.");
             }
         }
