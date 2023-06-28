@@ -24,7 +24,6 @@ describe("MultiCall", function () {
       );
 
       const umiTokenAddr = umiToken.target;
-      console.log("address 1::", addr1.address);
       const calldata = [
         [
           umiTokenAddr,
@@ -34,13 +33,12 @@ describe("MultiCall", function () {
         [
           umiTokenAddr,
           false,
-          "0x70a0823100000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c8",
+          "0x40c10f1900000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c80000000000000000000000000000000000000000000000000000000000000064",
         ],
       ];
       await multiCall.multicall(calldata);
-
       expect(await umiToken.balanceOf(addr1.address)).to.equal(50);
-      //   expect(await umiToken.balanceOf(addr2.address)).to.equal(100);
+      expect(await umiToken.balanceOf(addr2.address)).to.equal(100);
     });
   });
 });
