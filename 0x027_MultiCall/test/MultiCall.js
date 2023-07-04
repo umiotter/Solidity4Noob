@@ -39,6 +39,16 @@ describe("MultiCall", function () {
       await multiCall.multicall(calldata);
       expect(await umiToken.balanceOf(addr1.address)).to.equal(50);
       expect(await umiToken.balanceOf(addr2.address)).to.equal(100);
+
+      const abi = ["function balanceOf(address) public view returns(uint)"];
+      const addressUmiToken = await umiToken.getAddress();
+
+      // const contractUmiToken = new ethers.Contract(addressUmiToken, abi, owner);
+      // let balanceUmiToken = await contractUmiToken.balanceOf(addr1.address);
+      // console.log(`Read UmiToken Amount of Address1: ${ethers.formatEther(balanceUmiToken)}\n`);
+      // balanceUmiToken = await contractUmiToken.balanceOf(addr2.address);
+      // console.log(`Read UmiToken Amount of Address2: ${ethers.formatEther(balanceUmiToken)}\n`);
+
     });
   });
 });

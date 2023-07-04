@@ -29,7 +29,6 @@ I am learning solidity, this repository store some solidity demos which I learne
 - ERC4626 \[[Code](https://github.com/umiotter/Solidity_Demos/blob/main/0x025_ERC4626/)\]\[[UnitTest](https://github.com/umiotter/Solidity_Demos/blob/main/0x025_ERC4626/test)\]
 - EIP712 \[[Code](https://github.com/umiotter/Solidity_Demos/blob/main/0x026_EIP712/)\] 
 
-
 # Reference
 - [Solidity Document](https://docs.soliditylang.org/en/v0.8.20/)
 - [WTF Solidity](https://github.com/AmazingAng/WTF-Solidity/tree/main)
