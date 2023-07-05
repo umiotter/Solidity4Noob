@@ -2,6 +2,23 @@
 
 I am learning solidity, this repository store some solidity demos which I learned.
 
+Some demos contain unit testing by hardhat, here is the quick installation of the hardhat.
+
+
+```bash
+npm init
+npm install --save-dev hardhat
+npx hardhat
+```
+After the installation move `*.sol` file to contract folder and `*.js` to test folder.
+
+Start the unit testing with `npx hardhat test` command.
+
+```bash
+## Run unit testing script
+npx hardhat test
+```
+
 - Voting \[[Code](https://github.com/umiotter/Solidity_Demos/blob/main/0x001_voting/)\] \[[UnitTest](https://github.com/umiotter/Solidity_Demos/blob/main/0x001_voting/test)\]
 - VotingV2 \[[Code](https://github.com/umiotter/Solidity_Demos/blob/main/0x002_votingv2/)\] \[[UnitTest](https://github.com/umiotter/Solidity_Demos/blob/main/0x002_votingv2/test)\]
 - OpenAuction \[[Code](https://github.com/umiotter/Solidity_Demos/blob/main/0x003_OpenAcution/)\] \[[UnitTest](https://github.com/umiotter/Solidity_Demos/blob/main/0x003_OpenAcution/test)\]
