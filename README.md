@@ -10,7 +10,7 @@ npm init
 npm install --save-dev hardhat
 npx hardhat
 ```
-After the installation move `*.sol` file to contract folder and `*.js` to test folder.
+After the installation, move `*.sol` file to contract folder and `*.js` to test folder.
 
 Start the unit testing with `npx hardhat test` command.
 

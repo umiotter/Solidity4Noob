@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity ^0.8.0;
 
 contract BlindAuction{
     struct Bid {
-        bytes32 blindedBid;
-        uint deposit;
+        bytes32 blindedBid; // encrypted message
+        uint deposit; // true bid value
     }
 
     address payable public beneficiary;
@@ -13,16 +13,18 @@ contract BlindAuction{
     bool public ended;
 
     // bidder can bid multi-times, each blinded bid is hashed by 
-    // `blindedBid` = keccak256(abi.encodePacked(uint value, bool fakeBid, bytes32 secret))
+    // `blindedBid` = keccak256(abi.encodePacked(uint value, bool fakeBid, bytes32 secret)).
     // each blinded bid can include eth.
-    // bidder can use fake bid to confuse other competitors
-    // only the `fake == true` bid is valid bid
-    // secret is a nounce given from bider
+    // bidder can use fake bid to confuse other competitors.
+    // only the `fakeBid == false` bid is valid bid.
+    // secret is a nounce given from bider.
     mapping(address => Bid[]) public bids;
 
+    // information of current highest bid
     address highestBidder;
     uint highestBidPrice;
 
+    // Allowed withdrawals of previous bids
     mapping(address => uint) public pendingReturns;
 
     event AuctionEnded(address winner, uint highestBidder);
@@ -50,7 +52,7 @@ contract BlindAuction{
         revealEnd = bidingEnd + _revealTime;
         beneficiary = _beneficiaryAddress;
     }
-
+ 
     /// @notice bid
     /// @param _blindedBid `blindedBid` = keccak256(abi.encodePacked(uint value, bool fakeBid, bytes32 secret))
     function bid(bytes32 _blindedBid) external payable{
