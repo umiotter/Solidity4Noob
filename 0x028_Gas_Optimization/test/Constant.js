@@ -34,10 +34,19 @@ describe("Constant", function () {
       await constant.addVarV();
     });
 
-    it("run getvarC()", async () => {
-      console.log(ethers.id('addVarC()').substring(0, 10));
-      console.log(ethers.id('addVarI()').substring(0, 10));
-      console.log(ethers.id('addVarV()').substring(0, 10));
-    });
+    // it("MethodID", async () => {
+    //   console.log(
+    //     "addVarC()::",
+    //     ethers.id("addVarC()").substring(0, 10)
+    //   );
+    //   console.log(
+    //     "addVarI()::",
+    //     ethers.id("addVarI()").substring(0, 10)
+    //   );
+    //   console.log(
+    //     "MethodID:addVarV()::",
+    //     ethers.id("addVarV()").substring(0, 10)
+    //   );
+    // });
   });
 });

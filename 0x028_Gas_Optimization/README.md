@@ -98,3 +98,15 @@ Here are the pure reading result in remix ide:
 ### Conclusion
 - In practical, The variable definitions should be avoided as much as possible;
 - For constants that do not need to be modified, it is recommended to use const to define them, which is the best in terms of functionality and gas.
+
+# Calldata, Memory comparison
+
+Gas fee comparision of calldata and memory.
+
+| Method          | Gas Fee | Net Gas Fee | Save(Compare to writeByCalldata) |
+| --------------- | ------- | ----------- | -------------------------------- |
+| writeByCalldata | 91372   | 91372       | 0                                |
+| writeByMemory   | 92164   | 92142       | 770 (≈0.8%)                             |
+
+### Conclusion
+- It is recommended to use calldata for variable writing in preference.
