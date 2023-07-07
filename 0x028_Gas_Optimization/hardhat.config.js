@@ -12,7 +12,7 @@ module.exports = {
     outputFile: "GasReporter.txt",
     noColors: true,
     currency: "USD", 
-    coinmarketcap: COINMACKETCAP_API_KEY,
+    // coinmarketcap: COINMACKETCAP_API_KEY,
     token: "ETH"
   },
 };
