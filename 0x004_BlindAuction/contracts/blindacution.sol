@@ -73,7 +73,8 @@ contract BlindAuction{
         bytes32[] calldata _secret
     ) external 
     onlyAfter(bidingEnd)
-    onlyBefore(revealEnd){
+    onlyBefore(revealEnd)
+    {
         
         uint length = bids[msg.sender].length;
         require(_values.length == length);
