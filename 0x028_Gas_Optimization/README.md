@@ -1,4 +1,4 @@
-# GasOptimizaitonResearch
+# Gas Optimizaiton Research
 
 Gas optimization is extremely important to minimize the cost of deployment and gas fees for the end user. 
 This project demonstrates a series of testings to compare the gas fee among differet coding pattern.
