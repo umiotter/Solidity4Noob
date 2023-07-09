@@ -106,7 +106,31 @@ Gas fee comparision of calldata and memory.
 | Method          | Gas Fee | Net Gas Fee | Save(Compare to writeByCalldata) |
 | --------------- | ------- | ----------- | -------------------------------- |
 | writeByCalldata | 91372   | 91372       | 0                                |
-| writeByMemory   | 92164   | 92142       | 770 (≈0.8%)                             |
+| writeByMemory   | 92164   | 92142       | 770 (≈0.8%)                      |
 
 ### Conclusion
 - It is recommended to use calldata for variable writing in preference.
+
+
+# Unchecked and checked comparison
+
+Before Solidity 0.8.0, the SafeMath library needed to be imported manually to prevent the data overflow attack.
+
+In following Solidity version, solidity will perform a check every time data changes to determine if there is an overflow and thus decide whether to throw an exception.
+
+This mechanism also brings additional gas consumption. 
+
+Therefore, solidity provides unchecked block modifier to effectively remove the intermediate overflow detection, achieving the purpose of gas saving.
+
+In this unit testing, I run unchecked block and without unchecked block 1000 times to evaluate the gas consumption.
+
+Here is the result:
+
+| Method           | Gas Fee | Net Gas Fee | Save(Compare to writeByCalldata) |
+| ---------------- | ------- | ----------- | -------------------------------- |
+| withoutUnckecked | 415751  | 415751      | 0                                |
+| withUnckecked    | 113773  | 113751      | 302000 (≈73%)                    |
+
+### Conclusion
+
+If the security is under control, it is recommended to utilize unchecked for gas optimization.
