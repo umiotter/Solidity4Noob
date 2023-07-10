@@ -134,3 +134,46 @@ Here is the result:
 ### Conclusion
 
 If the security is under control, it is recommended to utilize unchecked for gas optimization.
+
+
+# Swap function comparison
+
+There are three methods that can be used to exchange the values of two variables.
+
+We list the code as follow:
+
+```solidity
+// normal swap
+function Swap(uint x, uint y) public returns(uint, uint){
+  uint z = y;
+  y = x;
+  x = z;
+  return (x, y);
+}
+
+// swap 2 variables with destructuring assignment
+function DesSwap(uint x, uint y) public returns(uint, uint){
+    (x, y) = (y, x);
+    return (x, y);
+}
+
+// swap 2 variables with bit operation
+function BitOperationSwap(uint x, uint y) public returns(uint, uint){
+  x = x | y;
+  y = x | y;
+  x = x | y;
+  return (x, y);
+}
+```
+
+Here is the gas consumption:
+
+| Method           | Net Gas Fee | Save(Compare to BitOperationSwap) |
+| ---------------- | ----------- | --------------------------------- |
+| Swap             | 36375       | 234                               |
+| DesSwap          | 36371       | 238                               |
+| BitOperationSwap | 36609       | 0                                 |
+
+# Conclusion
+
+Swap 2 variables with destructuring assignment will not help you to save gas, but it makes your code look better.
