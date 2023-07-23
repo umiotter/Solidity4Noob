@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts (last updated v4.9.0) (utils/Address.sol)
 
-pragma solidity ^0.8.6;
+pragma solidity ^0.8.4;
 
 /**
  * @dev Collection of functions related to the address type
@@ -202,5 +202,13 @@ library Address {
         } else {
             revert(errorMessage);
         }
+    }
+    
+    function isContract(address account) internal view returns (bool) {
+        uint size;
+        assembly {
+            size := extcodesize(account)
+        }
+        return size > 0;
     }
 }

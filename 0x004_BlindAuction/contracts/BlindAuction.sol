@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "./SimpleToken.sol";
+
 contract BlindAuction{
     
     struct Bid {
@@ -48,10 +50,12 @@ contract BlindAuction{
         _;
     }
 
-    constructor(uint _biddingTime, uint _revealTime, address payable _beneficiaryAddress){
+    constructor(uint _biddingTime, uint _revealTime, address payable _beneficiaryAddress, address _addrToken){
         bidingEnd = block.timestamp + _biddingTime;
         revealEnd = bidingEnd + _revealTime;
         beneficiary = _beneficiaryAddress;
+        SimpleToken token = SimpleToken(_addrToken);
+
     }
  
     /// @notice bid

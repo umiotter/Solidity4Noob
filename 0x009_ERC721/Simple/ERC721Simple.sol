@@ -9,8 +9,7 @@ import "./extensions/IERC721Metadata.sol";
 import "./utils/Address.sol";
 import "./utils/Strings.sol";
 
-// 
-contract ERC721Simple is IERC721, IERC721Metadata, IERC721Receiver{
+contract ERC721Simple is IERC721, IERC721Metadata {
     //Address library contrains isContract() for judging if addres is a contract
     using Address for address;
     //String library contrains uint to string function
@@ -104,28 +103,6 @@ contract ERC721Simple is IERC721, IERC721Metadata, IERC721Receiver{
         return (_operator == _owner ||
             _tokenApprovals[_tokenId] == _operator ||
             _operatorApprovals[_owner][_operator]);
-    }
-
-    function safeTransferFrom(
-        address from,
-        address to,
-        uint tokenId,
-        bytes memory _data
-    ) public override {
-        address owner = ownerOf(tokenId);
-        require(
-            _isApprovedOrOwner(owner, msg.sender, tokenId),
-            "not owner nor approved"
-        );
-        _safeTransfer(owner, from, to, tokenId, _data);
-    }
-
-    function safeTransferFrom(
-        address from,
-        address to,
-        uint tokenId
-    ) external override {
-        safeTransferFrom(from, to, tokenId, "");
     }
 
     function _safeTransfer(
@@ -227,4 +204,18 @@ contract ERC721Simple is IERC721, IERC721Metadata, IERC721Receiver{
     function tokenURI(
         uint256 tokenId
     ) external view override returns (string memory) {}
+
+    function safeTransferFrom(
+        address from,
+        address to,
+        uint256 tokenId,
+        bytes calldata data
+    ) external override {}
+
+    function safeTransferFrom(
+        address from,
+        address to,
+        uint256 tokenId
+    ) external override {}
+
 }
