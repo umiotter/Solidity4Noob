@@ -188,7 +188,6 @@ contract ERC721Simple is IERC721, IERC721Metadata {
         emit Transfer(address(0), to, tokenId);
     }
 
-    // 销毁函数，通过调整_balances和_owners变量来销毁tokenId，同时释放Transfer事件。条件：tokenId存在。
     function _burn(uint tokenId) internal virtual {
         address owner = ownerOf(tokenId);
         require(msg.sender == owner, "not owner of token");
