@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 contract BlindAuction{
+    
     struct Bid {
         bytes32 blindedBid; // encrypted message
         uint deposit; // true bid value
@@ -75,7 +76,6 @@ contract BlindAuction{
     onlyAfter(bidingEnd)
     onlyBefore(revealEnd)
     {
-        
         uint length = bids[msg.sender].length;
         require(_values.length == length);
         require(_fake.length == length);
@@ -85,17 +85,14 @@ contract BlindAuction{
         for(uint i = 0; i < length; i++){
             Bid storage bidOfSender = bids[msg.sender][i];
             (uint value, bool fake, bytes32 secret) = (_values[i], _fake[i], _secret[i]);
-            // check current bider's Legitimacy
+            // check legitimacy of each bid
             if(bidOfSender.blindedBid != keccak256(abi.encodePacked(value, fake, secret))){
                 continue;
             }
 
-            // we add or minus eth first then check its legitimacy to prevent
-            // double spendding attack
-            // refund all bid which bidder labeled as fake
             refund += bidOfSender.deposit;
-            // check if highest bid for true bid
-            // if highest, dont refund highest bid price, else refund
+            // check if highest bid for true bid and if attached eth is enough
+            // if not highest, refund
             if(!fake && bidOfSender.deposit >= value) {
                 if(placeBid(msg.sender, value))
                     refund -= value;
@@ -104,15 +101,17 @@ contract BlindAuction{
         }
         payable(msg.sender).transfer(refund);
     }
+
     /// @notice check the whether is highest bid price
     /// @param _bidder current bidder
-    /// @param _value its bid price
+    /// @param _value bid price
     function placeBid(address _bidder, uint _value) internal returns(bool success){
+        // reject same highest bid price is invaild
         if(_value <= highestBidPrice){
             return false;
         }
-        // else bidder is the highest bidder
         if(highestBidder != address(0)){
+            // record previous highest bidder for refunding
             pendingReturns[highestBidder] += highestBidPrice;
         }
         highestBidder = _bidder;
@@ -120,8 +119,15 @@ contract BlindAuction{
         return true;
     }
 
+    /// @dev query balance in pendingReturns
+    /// @return uint balance in pendingReturns
+    function getPendingReturns() external view returns(uint) {
+        return pendingReturns[msg.sender];
+    }
+
     /// @notice bider should call withdraw to return their eth
     /// @return withdraw success or not
+    /// @dev it‘s meaningless to call withdraw before reveal() 
     function withdraw() external returns(bool){
         uint amount = pendingReturns[msg.sender];
         if(amount > 0){
@@ -136,6 +142,7 @@ contract BlindAuction{
 
     /// @notice end the auction, send the eth to beneficiary
     function auctionEnd() external onlyAfter(revealEnd){
+        require(msg.sender == beneficiary);
         if (ended) revert AuctionEndAlreadyCalled();
         emit AuctionEnded(highestBidder, highestBidPrice);
         ended = true;

@@ -26,6 +26,7 @@ contract OpenAuction {
     error AuctionEndAlreadyCalled();
 
     /// @notice EN: setting auctionEndTime and beneficiary address
+    /// @notice CN: 初始化合约，设置拍卖结束时间和受益人地址
     constructor(uint _biddingTime, address payable _beneficiaryAddress){
         require(_beneficiaryAddress != address(0), "Beneficiary should not be zero address.");
         beneficiary = _beneficiaryAddress;
@@ -33,17 +34,18 @@ contract OpenAuction {
     }
 
     /// @notice EN: bid a price
+    /// @notice CN: 
     function bid() external payable{
-        // ensuring auction isnt ended
         if(block.timestamp > auctionEndTime){
             revert AcutionAlreadyEnded();
         }
-        // ensuring bid price is higher than current highest price
+
         if(msg.value <= highestBidPrice){
             revert BidNotHighEnough(highestBidPrice);
         }
 
-        // save previous highest bidder for pending returns
+        // bid is higher than current highest bid,
+        // save current higest bidder record for pending returns
         if(highestBidPrice != 0){
             pendingReturns[highestBidder] += highestBidPrice;
         }
@@ -57,7 +59,8 @@ contract OpenAuction {
     function withdraw() external{
         uint amount = pendingReturns[msg.sender];
         if(amount > 0){
-            pendingReturns[msg.sender] = 0; // preventing reentrancy attack
+            // preventing replay attack
+            pendingReturns[msg.sender] = 0;
             if(!payable(msg.sender).send(amount)){
                 pendingReturns[msg.sender] = amount;
                 revert();
@@ -84,9 +87,5 @@ contract OpenAuction {
 
         beneficiary.transfer(highestBidPrice);
     }
-
-    fallback() external payable {}
-
-    receive() external payable {}
 
 }
