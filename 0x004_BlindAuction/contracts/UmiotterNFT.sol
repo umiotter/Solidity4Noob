@@ -4,8 +4,8 @@ pragma solidity ^0.8.4;
 
 import "./ERC721/ERC721Simple.sol";
 
-contract SimpleAPE is ERC721Simple{
-    uint public MAX_APES = 10000; 
+contract UmiotterNFT is ERC721Simple{
+    uint public MAX_APES = 100; 
 
     constructor(string memory name_, string memory symbol_) ERC721Simple(name_, symbol_){
     }

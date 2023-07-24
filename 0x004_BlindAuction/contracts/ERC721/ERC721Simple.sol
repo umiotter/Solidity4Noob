@@ -112,11 +112,12 @@ contract ERC721Simple is IERC721, IERC721Metadata {
         uint tokenId,
         bytes memory _data
     ) private {
-        _transfer(owner, from, to, tokenId);
+        // ensuring that `from` target has implement OnERC721Received function
         require(
             _checkOnERC721Received(from, to, tokenId, _data),
             "not ERC721Receiver"
         );
+        _transfer(owner, from, to, tokenId);
     }
 
     function _checkOnERC721Received(
@@ -179,8 +180,8 @@ contract ERC721Simple is IERC721, IERC721Metadata {
     }
 
     function _mint(address to, uint tokenId) internal virtual {
-        require(to != address(0), "mint to zero address");
-        require(_owners[tokenId] == address(0), "token already minted");
+        require(to != address(0), "Mint to zero address");
+        require(_owners[tokenId] == address(0), "Token already minted");
 
         _balances[to] += 1;
         _owners[tokenId] = to;
@@ -208,13 +209,22 @@ contract ERC721Simple is IERC721, IERC721Metadata {
         address from,
         address to,
         uint256 tokenId,
-        bytes calldata data
-    ) external override {}
+        bytes memory data
+    ) public override {
+        address owner = _owners[tokenId];
+        require(
+            _isApprovedOrOwner(owner, msg.sender, tokenId),
+            "not owner nor approved"
+        );
+        _safeTransfer(owner, from, to, tokenId, data);
+    }
 
     function safeTransferFrom(
         address from,
         address to,
         uint256 tokenId
-    ) external override {}
+    ) external override {
+        safeTransferFrom(from, to, tokenId, "");
+    }
 
 }
